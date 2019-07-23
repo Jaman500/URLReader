@@ -33,26 +33,49 @@ public class URLReader {
         //InputStreamReader takes chars and turns them into strings (i think). Here, we wrap the reader into the bufferedreader
         //for efficiency
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(testConnection.getInputStream()));
+        //make two strings to update line without effecting the code
+        String one = new String(), two = new String();
         //while there is still something to be read, line equals that next line
+        
+        
         while((line = bufferedReader.readLine()) != null)
         {
             //add the line to the stringbuilder
+            
             text.append(line + "\n");
             if(line.contains("stock-name"))
             {
-                data.append(line.substring(line.indexOf("stock-name")) + " - ");
+                int num1, num2;
+                num1 = line.indexOf("stock-name") + 12;
+                
+                
+                
+                one = line.substring(num1);
+                num2 = one.indexOf("<");
+                two = one.substring(0,num2);
+                //+ 11, line.indexOf("<") - 1);
+                //two = line.substring(line.indexOf("<") - 1);
+                //data.append(line.substring(line.indexOf("stock-name")) + " - ");
+                data.append(two + " - ");
             }
             else if(line.contains("stock-price"))
             {
-                data.append(line.substring(line.indexOf("stock-price")) + "\n");
+                int num3, num4;
+                String three, four;
+                num3 = line.indexOf("stock-price") + 13;
+                three = line.substring(num3);
+                num4 = three.indexOf("<");
+                four = three.substring(0, num4);
+                //data.append(line.substring(line.indexOf("stock-price")) + "\n");
+                data.append(four + "\n");
             }
         }
         //close the buffered reader now
         bufferedReader.close();
         
         //print out the line
-        System.out.println(text);
-        System.out.println("\n \n \n \n");
+        //System.out.println(text);
+        //System.out.println("\n \n \n \n");
         System.out.println(data);
         
         // TODO code application logic here
